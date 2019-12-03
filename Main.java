@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -22,6 +23,9 @@ public class Main extends Application {
 	Scene windowContent;
 	HBox windowLayout = new HBox(20);
 	TextField prompt;
+	Button showStation;
+	TextField sliderNumber;
+	TextArea listOfStations;
 	
 	
 	public static void main(String[] args) {
@@ -52,6 +56,7 @@ public class Main extends Application {
 		windowContent = new Scene(windowLayout, 500, 500);
 		windowLayout.getChildren().add(prompt);
 		windowLayout.getChildren().add(hammingDistSlider);
+		windowLayout.getChildren().add(showStation);
 	}
 	
 	/**
@@ -74,7 +79,17 @@ public class Main extends Application {
 			public void changed(ObservableValue<? extends Number> observable, Number oldVal, Number newVal) {
 				// TODO Auto-generated method stub
 				prompt.setText("Hamming Distance is " + newVal.intValue());
+				sliderNumber.setText(String.valueOf(newVal.intValue()));
 				
+				
+			}
+		});
+		showStation.setText("Show Station");
+		showStation.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
 				
 			}
 		});
