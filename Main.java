@@ -1,12 +1,15 @@
 import java.awt.Event;
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -21,11 +24,14 @@ public class Main extends Application {
 
 	Slider hammingDistSlider;
 	Scene windowContent;
-	HBox windowLayout = new HBox(20);
+	VBox windowLayout = new VBox(20);
 	TextField prompt;
 	Button showStation;
 	TextField sliderNumber;
 	TextArea listOfStations;
+	int hammingSliderValue;
+	TextField compareWithPrompt;
+	ComboBox compareWith;
 	
 	
 	public static void main(String[] args) {
@@ -38,6 +44,7 @@ public class Main extends Application {
 		// TODO Auto-generated method stub
 		projectWindow.setTitle("Project 5");
 		createSlider();
+		showAndDisplayStations();
 		addElementsToWindow();
 		projectWindow.setScene(windowContent);
 		projectWindow.show();
@@ -57,6 +64,9 @@ public class Main extends Application {
 		windowLayout.getChildren().add(prompt);
 		windowLayout.getChildren().add(hammingDistSlider);
 		windowLayout.getChildren().add(showStation);
+		windowLayout.getChildren().add(listOfStations);
+		windowLayout.getChildren().add(compareWithPrompt);
+		windowLayout.getChildren().add(compareWith);
 	}
 	
 	/**
@@ -84,6 +94,13 @@ public class Main extends Application {
 				
 			}
 		});
+	
+	}
+	
+	public void showAndDisplayStations() throws IOException {
+		HammingDistCalc hammingDistCalc = new HammingDistCalc();
+		showStation = new Button();
+		listOfStations = new TextArea();
 		showStation.setText("Show Station");
 		showStation.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -93,8 +110,12 @@ public class Main extends Application {
 				
 			}
 		});
+		compareWithPrompt = new TextField("Compare With: ");
+		compareWithPrompt.setEditable(false);
+		compareWith = new ComboBox(FXCollections.observableArrayList(hammingDistCalc.returnStations()));
 		
-
+		
+		
 		
 	}
 
