@@ -1,21 +1,40 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class HammingDistCalc {
 
 	int capacity = 5;
 	String[] stationIDArray = new String[capacity];
+	ArrayList<String> stationsWithSameHammingDist = new ArrayList();
 	
 	public HammingDistCalc() throws IOException {
 		readFile();
 		returnStations();
 	}
 	
-//	public String[] calHammingDistList() throws IOException {
-//		readFile();
-//	}
-//	
+	public ArrayList<String> calHammingDistList(String station, int hammingDist) throws IOException {
+		readFile();
+		int hammingDistTemp = 0;
+		for(int i = 0; i < stationIDArray.length; i++) {
+			for(int j = 0; j < station.toCharArray().length; j++) {
+				if(station.toCharArray()[j] != stationIDArray[i].toCharArray()[j]) {
+					hammingDistTemp = hammingDistTemp + 1;
+					
+				}
+			}
+			
+			if(hammingDist == hammingDistTemp) {
+				stationsWithSameHammingDist.add(stationIDArray[i]);
+				
+				
+			}
+		}
+		
+		return stationsWithSameHammingDist;
+	}
+	
 	/**
 	 * Reads each line and adds the first 4 substrings into the string array
 	 * @throws IOException

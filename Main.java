@@ -113,6 +113,8 @@ public class Main extends Application {
 		compareWithPrompt = new TextField("Compare With: ");
 		compareWithPrompt.setEditable(false);
 		compareWith = new ComboBox(FXCollections.observableArrayList(hammingDistCalc.returnStations()));
+		 
+		//Todo add text from arrayList to text area from calHammingDistList
 		
 		
 		
