@@ -1,5 +1,6 @@
 import java.awt.Event;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -22,19 +23,19 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	ArrayList<String> resultList;
 	Slider hammingDistSlider;
 	Scene windowContent;
 	VBox windowLayout = new VBox(20);
 	TextField prompt;
 	Button showStation;
-	TextField sliderNumber;
 	TextArea listOfStations;
-	int hammingSliderValue;
+	int hammingSliderValue = 0;
 	TextField compareWithPrompt;
 	ComboBox compareWith;
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		launch(args);
 	}
@@ -89,36 +90,56 @@ public class Main extends Application {
 			public void changed(ObservableValue<? extends Number> observable, Number oldVal, Number newVal) {
 				// TODO Auto-generated method stub
 				prompt.setText("Hamming Distance is " + newVal.intValue());
-				sliderNumber.setText(String.valueOf(newVal.intValue()));
+				hammingSliderValue = newVal.intValue();
+				
 				
 				
 			}
 		});
+		
 	
 	}
 	
 	public void showAndDisplayStations() throws IOException {
+		
 		HammingDistCalc hammingDistCalc = new HammingDistCalc();
 		showStation = new Button();
 		listOfStations = new TextArea();
 		showStation.setText("Show Station");
-		showStation.setOnAction(new EventHandler<ActionEvent>() {
+		
+		compareWithPrompt = new TextField("Compare With: ");
+		compareWithPrompt.setEditable(false);
+		compareWith = new ComboBox(FXCollections.observableArrayList(hammingDistCalc.returnStations()));
+		compareWith.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				try {
+					
+					resultList = hammingDistCalc.calHammingDistList(compareWith.getValue().toString(), hammingSliderValue);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		 
+		showStation.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO add text from arrayList to text area from calHammingDistList
+				listOfStations.clear();
+				for(int i = 0; i < resultList.size(); i++) {
+					listOfStations.appendText(resultList.get(i) + "\n");
+				}
+				
+				
 				
 			}
 		});
-		compareWithPrompt = new TextField("Compare With: ");
-		compareWithPrompt.setEditable(false);
-		compareWith = new ComboBox(FXCollections.observableArrayList(hammingDistCalc.returnStations()));
-		 
-		//Todo add text from arrayList to text area from calHammingDistList
-		
-		
-		
-		
 	}
 
 }

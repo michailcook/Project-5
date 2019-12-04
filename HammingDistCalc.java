@@ -7,19 +7,27 @@ public class HammingDistCalc {
 
 	int capacity = 5;
 	String[] stationIDArray = new String[capacity];
-	ArrayList<String> stationsWithSameHammingDist = new ArrayList();
+	Main mainVariable = new Main();
+	
 	
 	public HammingDistCalc() throws IOException {
 		readFile();
 		returnStations();
+		
 	}
 	
 	public ArrayList<String> calHammingDistList(String station, int hammingDist) throws IOException {
 		readFile();
+		ArrayList<String> stationsWithSameHammingDist = new ArrayList();
 		int hammingDistTemp = 0;
-		for(int i = 0; i < stationIDArray.length; i++) {
-			for(int j = 0; j < station.toCharArray().length; j++) {
-				if(station.toCharArray()[j] != stationIDArray[i].toCharArray()[j]) {
+		for(int i = 0; stationIDArray[i] != null; i++) {
+			
+			char[] charOfStationID = stationIDArray[i].toCharArray();
+			char[] charOStationPara = station.toCharArray();
+			
+			for(int j = 0; j < charOfStationID.length; j++) {
+				
+				if(charOfStationID[j] != charOStationPara[j]) {
 					hammingDistTemp = hammingDistTemp + 1;
 					
 				}
@@ -30,7 +38,11 @@ public class HammingDistCalc {
 				
 				
 			}
+			
+			hammingDistTemp = 0;
+			
 		}
+		
 		
 		return stationsWithSameHammingDist;
 	}
