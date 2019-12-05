@@ -8,13 +8,19 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -37,6 +43,9 @@ public class Main extends Application {
 	TextArea distances;
 	Button addStation;
 	TextField userInputStation;
+	Image gif;
+	ImageView imageView;
+	Button switchScenes;
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -57,6 +66,7 @@ public class Main extends Application {
 		createSlider();
 		showAndDisplayStations();
 		addAStationAndUpdate();
+		somethingCreative();
 		addElementsToWindow();
 		projectWindow.setScene(windowContent);
 		projectWindow.show();
@@ -72,18 +82,30 @@ public class Main extends Application {
 	 */
 	public void addElementsToWindow() {
 		
-		windowContent = new Scene(windowLayout, 500, 500);
+		
 		windowLayout.getChildren().add(prompt);
+		prompt.setAlignment(Pos.CENTER);
 		windowLayout.getChildren().add(hammingDistSlider);
 		windowLayout.getChildren().add(showStation);
 		windowLayout.getChildren().add(listOfStations);
 		windowLayout.getChildren().add(compareWithPrompt);
+		compareWithPrompt.setAlignment(Pos.CENTER);
 		windowLayout.getChildren().add(compareWith);
 		windowLayout.getChildren().add(calcHD);
 		windowLayout.getChildren().add(distances);
 		windowLayout.getChildren().add(addStation);
 		windowLayout.getChildren().add(userInputStation);
-
+		windowLayout.getChildren().add(imageView);
+		
+		windowLayout.setSpacing(10);
+		windowLayout.setPadding(new Insets(10));
+		ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setContent(windowLayout);
+		scrollPane.setPannable(true);
+		scrollPane.setFitToHeight(true);
+		
+		windowContent = new Scene(scrollPane, 500, 500);
+		
 		
 		
 	}
@@ -235,6 +257,11 @@ public class Main extends Application {
 		});
 		
 		
+	}
+	
+	public void somethingCreative() {
+		gif = new Image("sleepyduck.gif");
+		imageView = new ImageView(gif);
 	}
 
 }
