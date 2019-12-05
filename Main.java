@@ -33,10 +33,20 @@ public class Main extends Application {
 	int hammingSliderValue = 0;
 	TextField compareWithPrompt;
 	ComboBox compareWith;
-	
+	Button calcHD;
+	TextArea distances;
+	Button addStation;
+	TextField userInputStation;
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
+//		ArrayList<String> calculations;
+//		HammingDistCalc pre = new HammingDistCalc();
+//		calculations = pre.calHammingDistList("WEST", 2);
+//		for(int i = 0; i < calculations.size(); i++) {
+//			System.out.println(calculations.get(i));
+//		}
+		
 		launch(args);
 	}
 
@@ -46,6 +56,7 @@ public class Main extends Application {
 		projectWindow.setTitle("Project 5");
 		createSlider();
 		showAndDisplayStations();
+		addAStationAndUpdate();
 		addElementsToWindow();
 		projectWindow.setScene(windowContent);
 		projectWindow.show();
@@ -68,6 +79,13 @@ public class Main extends Application {
 		windowLayout.getChildren().add(listOfStations);
 		windowLayout.getChildren().add(compareWithPrompt);
 		windowLayout.getChildren().add(compareWith);
+		windowLayout.getChildren().add(calcHD);
+		windowLayout.getChildren().add(distances);
+		windowLayout.getChildren().add(addStation);
+		windowLayout.getChildren().add(userInputStation);
+
+		
+		
 	}
 	
 	/**
@@ -78,7 +96,7 @@ public class Main extends Application {
 		prompt = new TextField("Enter Hamming Distance.");
 		prompt.setEditable(false);
 		
-		hammingDistSlider = new Slider(1,5,3);
+		hammingDistSlider = new Slider(1,4,3);
 		hammingDistSlider.setShowTickLabels(true);
 		hammingDistSlider.setShowTickMarks(true);
 		hammingDistSlider.setMajorTickUnit(1);
@@ -105,6 +123,7 @@ public class Main extends Application {
 		HammingDistCalc hammingDistCalc = new HammingDistCalc();
 		showStation = new Button();
 		listOfStations = new TextArea();
+		listOfStations.setEditable(false);
 		showStation.setText("Show Station");
 		
 		compareWithPrompt = new TextField("Compare With: ");
@@ -140,6 +159,82 @@ public class Main extends Application {
 				
 			}
 		});
+		
+		distances = new TextArea();
+		distances.setEditable(false);
+		calcHD = new Button();
+		calcHD.setText("Calculate HD");
+		calcHD.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				distances.clear();
+				try {
+					distances.setText(hammingDistCalc.calDistancesofStation(compareWith.getValue().toString()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		
+	}
+	
+	public void addAStationAndUpdate() throws IOException {
+		HammingDistCalc hDC = new HammingDistCalc();
+		addStation = new Button();
+		addStation.setText("Add Station");
+		userInputStation = new TextField();
+		userInputStation.setEditable(true);
+		
+		addStation.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				hDC.addStationtoArray(userInputStation.getText().substring(0,4).toUpperCase());
+				compareWith.setItems(FXCollections.observableArrayList(hDC.returnStations()));
+				
+				
+			}
+		});
+		
+		
+		showStation.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO add text from arrayList to text area from calHammingDistList
+				listOfStations.clear();
+				for(int i = 0; i < resultList.size(); i++) {
+					listOfStations.appendText(resultList.get(i) + "\n");
+				}
+				
+				
+				
+			}
+		});
+		
+		calcHD.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				distances.clear();
+				try {
+					distances.setText(hDC.calDistancesofStation(compareWith.getValue().toString()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		
+		
 	}
 
 }
