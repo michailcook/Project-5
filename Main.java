@@ -29,33 +29,25 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	ArrayList<String> resultList;
-	Slider hammingDistSlider;
-	Scene windowContent;
-	VBox windowLayout = new VBox(20);
-	TextField prompt;
-	Button showStation;
-	TextArea listOfStations;
-	int hammingSliderValue = 0;
-	TextField compareWithPrompt;
-	ComboBox compareWith;
-	Button calcHD;
-	TextArea distances;
-	Button addStation;
-	TextField userInputStation;
-	Image gif;
-	ImageView imageView;
-	Button switchScenes;
+	public ArrayList<String> resultList;
+	public Slider hammingDistSlider;
+	public Scene windowContent;
+	public VBox windowLayout = new VBox(20);
+	public TextField prompt;
+	public Button showStation;
+	public TextArea listOfStations;
+	public int hammingSliderValue = 0;
+	public TextField compareWithPrompt;
+	public ComboBox compareWith;
+	public Button calcHD;
+	public TextArea distances;
+	public Button addStation;
+	public TextField userInputStation;
+	public Image gif;
+	public ImageView imageView;
 	
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-//		ArrayList<String> calculations;
-//		HammingDistCalc pre = new HammingDistCalc();
-//		calculations = pre.calHammingDistList("WEST", 2);
-//		for(int i = 0; i < calculations.size(); i++) {
-//			System.out.println(calculations.get(i));
-//		}
-		
+		// TODO Auto-generated method stub	
 		launch(args);
 	}
 
@@ -111,8 +103,8 @@ public class Main extends Application {
 	}
 	
 	/**
-	 * Method that creates the slider for the Hamming Dist of stations
-	 *  
+	 * Method that creates the slider for the Hamming Dist of stations and records the change in slider value
+	 * 
 	 */
 	public void createSlider() {
 		prompt = new TextField("Enter Hamming Distance.");
@@ -140,6 +132,11 @@ public class Main extends Application {
 	
 	}
 	
+	/**
+	 * Method that displays a list of stations based on the selected station and slider value
+	 * Additionally displays the number of stations with a certain HammingDist based on the selected station
+	 * @throws IOException
+	 */
 	public void showAndDisplayStations() throws IOException {
 		
 		HammingDistCalc hammingDistCalc = new HammingDistCalc();
@@ -204,6 +201,10 @@ public class Main extends Application {
 		
 	}
 	
+	/**
+	 * Method that adds a station based on user input and updates previous functions to work with the new station
+	 * @throws IOException
+	 */
 	public void addAStationAndUpdate() throws IOException {
 		HammingDistCalc hDC = new HammingDistCalc();
 		addStation = new Button();
@@ -259,6 +260,9 @@ public class Main extends Application {
 		
 	}
 	
+	/**
+	 * Adds an image to the scene as a means of the free mode
+	 */
 	public void somethingCreative() {
 		gif = new Image("sleepyduck.gif");
 		imageView = new ImageView(gif);
